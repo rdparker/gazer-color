@@ -15,6 +15,10 @@
     {
       "name": "Michael Mayer",
       "email": "michael@schnittstabil.de"
+    },
+    {
+      "name": "Ron Parker",
+      "email": "rdparkeg@gmail.com"
     }
   ],
   "license": "BSD-2-Clause",
@@ -25,11 +29,11 @@
     "gaze": "^1.1.0",
     "lodash.debounce": "^4.0.0",
     "npmlog": "^4.1.2",
-    "yargs": "^12.0.2"
+    "yargs": "^17.7.2"
   },
   "devDependencies": {
-    "ava": "1.0.0-rc.1",
-    "xo": "^0.23.0"
+    "ava": "^6.0.1",
+    "xo": "^0.56.0"
   },
   "repository": {
     "type": "git",
