@@ -43,12 +43,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:schnittstabil/gazer-color.git"
+    "url": "git@github.com:rdparker/gazer-color.git"
   },
   "bugs": {
-    "url": "https://github.com/schnittstabil/gazer-color/issues"
+    "url": "https://github.com/rdparker/gazer-color/issues"
   },
-  "homepage": "https://github.com/schnittstabil/gazer-color",
+  "homepage": "https://github.com/rdparker/gazer-color",
   "keywords": [
     "bin",
     "cli",
