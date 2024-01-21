@@ -1,19 +1,19 @@
-'use strict';
-import { relative } from 'path';
-
+import {relative} from 'node:path';
+import process from 'node:process';
 import gaze from 'gaze';
 import npmlog from 'npmlog';
-const info = npmlog.info;
-
 import Runner from './runner.js';
 
-export default function (patterns, cmd, args, opts) {
-	opts = opts || {};
-	const runner = new Runner(cmd, args, opts);
+const {info} = npmlog;
 
-	gaze(patterns, opts, function (err) {
-		if (err) {
-			throw new Error(err);
+// eslint-disable-next-line import/no-anonymous-default-export
+export default function (patterns, cmd, args, options) {
+	options = options || {};
+	const runner = new Runner(cmd, args, options);
+
+	gaze(patterns, options, function (error) {
+		if (error) {
+			throw new Error(error);
 		}
 
 		const fileCount = Object.keys(this.watched()).length;
@@ -26,4 +26,4 @@ export default function (patterns, cmd, args, opts) {
 			runner.run();
 		});
 	});
-};
+}

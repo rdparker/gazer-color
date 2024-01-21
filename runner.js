@@ -1,35 +1,35 @@
-'use strict';
-import { spawn } from 'child_process';
-
+import {spawn} from 'node:child_process';
+import process from 'node:process';
 import debounce from 'lodash.debounce';
 import npmlog from 'npmlog';
-const info = npmlog.info;
+
+const {info} = npmlog;
 
 function sanitizeSpawnArgs(cmd, args) {
-	const spawnOpts = {stdio: 'inherit'};
+	const spawnOptions = {stdio: 'inherit'};
 
 	if (process.platform === 'win32') {
-		args = ['/c', '"' + cmd + '"'].concat(args);
+		args = ['/c', '"' + cmd + '"', ...args];
 		cmd = 'cmd';
-		spawnOpts.windowsVerbatimArguments = true;
+		spawnOptions.windowsVerbatimArguments = true;
 	}
 
-	return [cmd, args, spawnOpts];
+	return [cmd, args, spawnOptions];
 }
 
-function Runner(cmd, args, opts) {
+function Runner(cmd, args, options) {
 	const wait = 100; // Debounce: the number of milliseconds to delay
 	const spawnArgs = sanitizeSpawnArgs(cmd, args);
-	const spawnArgsLogString = [spawnArgs[0]].concat(spawnArgs[1]).join(' ');
+	const spawnArgsLogString = [spawnArgs[0], spawnArgs[1]].join(' ');
 
-	opts = opts || {};
+	options = options || {};
 
 	this.spawn = function () {
 		info('gazer-color', 'Running `%s`', spawnArgsLogString);
 
 		const child = spawn(...spawnArgs);
 
-		if (opts.verbose) {
+		if (options.verbose) {
 			child.on('close', code => {
 				info('gazer-color', '`%s` exited with code %d', spawnArgsLogString, code);
 			});

@@ -1,5 +1,5 @@
-import childProcess from 'child_process';
-
+import childProcess from 'node:child_process';
+import process from 'node:process';
 import test from 'ava';
 
 const {exec} = childProcess;
@@ -16,7 +16,7 @@ class Listener {
 
 	spawnCli(...args) {
 		return new Promise((resolve, reject) => {
-			this.child = childProcess.spawn('node', [CLI].concat(args));
+			this.child = childProcess.spawn('node', [CLI, ...args]);
 			this.child.stderr.on('data', this.listen.bind(this, 'stderr'));
 			this.child.stdout.on('data', this.listen.bind(this, 'stdout'));
 			this.child.on('close', () => {
@@ -27,11 +27,11 @@ class Listener {
 				this.cleanUp();
 				resolve(this);
 			});
-			this.child.on('error', err => {
+			this.child.on('error', error => {
 				this.cleanUp();
-				reject(err);
+				reject(error);
 			});
-			this.child.on('error', err => reject(err));
+			this.child.on('error', error => reject(error));
 		});
 	}
 
@@ -48,6 +48,7 @@ class Listener {
 		if (this.waitUntilTimer) {
 			return;
 		}
+
 		this.waitUntilTimer = setInterval(() => this.wait(), 100);
 		this.echoTimer = setInterval(() => this.echo(), 1000);
 	}

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-'use strict';
+import process from 'node:process';
 import yargs from 'yargs/yargs';
 import gazer from './index.js';
 
@@ -15,13 +15,13 @@ const {argv} = yargs(process.argv.slice(2))
 const {pattern} = argv;
 const cmd = argv._[0];
 const args = argv._.slice(1);
-const opts = argv;
+const options = argv;
 
 // Delete non gazer options
-delete opts.pattern;
-delete opts.v;
-delete opts.p;
-delete opts._;
-delete opts.$0;
+delete options.pattern;
+delete options.v;
+delete options.p;
+delete options._;
+delete options.$0;
 
-gazer([].concat(pattern), cmd, args, opts);
+gazer([pattern].flat(), cmd, args, options);
