@@ -1,8 +1,9 @@
 'use strict';
-const {spawn} = require('child_process');
+import { spawn } from 'child_process';
 
-const debounce = require('lodash.debounce');
-const npmlog = require('npmlog');
+import debounce from 'lodash.debounce';
+import npmlog from 'npmlog';
+const info = npmlog.info;
 
 function sanitizeSpawnArgs(cmd, args) {
 	const spawnOpts = {stdio: 'inherit'};
@@ -24,13 +25,13 @@ function Runner(cmd, args, opts) {
 	opts = opts || {};
 
 	this.spawn = function () {
-		npmlog.info('gazer-color', 'Running `%s`', spawnArgsLogString);
+		info('gazer-color', 'Running `%s`', spawnArgsLogString);
 
 		const child = spawn(...spawnArgs);
 
 		if (opts.verbose) {
 			child.on('close', code => {
-				npmlog.info('gazer-color', '`%s` exited with code %d', spawnArgsLogString, code);
+				info('gazer-color', '`%s` exited with code %d', spawnArgsLogString, code);
 			});
 		}
 	};
@@ -38,4 +39,4 @@ function Runner(cmd, args, opts) {
 	this.run = debounce(this.spawn, wait);
 }
 
-module.exports = Runner;
+export default Runner;

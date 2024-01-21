@@ -1,12 +1,13 @@
 'use strict';
-const path = require('path');
+import { relative } from 'path';
 
-const gaze = require('gaze');
-const npmlog = require('npmlog');
+import gaze from 'gaze';
+import npmlog from 'npmlog';
+const info = npmlog.info;
 
-const Runner = require('./runner');
+import Runner from './runner.js';
 
-module.exports = function (patterns, cmd, args, opts) {
+export default function (patterns, cmd, args, opts) {
 	opts = opts || {};
 	const runner = new Runner(cmd, args, opts);
 
@@ -17,11 +18,11 @@ module.exports = function (patterns, cmd, args, opts) {
 
 		const fileCount = Object.keys(this.watched()).length;
 
-		npmlog.info('gazer-color', 'Watching %d file[s] (%s)', fileCount, patterns.join(', '));
+		info('gazer-color', 'Watching %d file[s] (%s)', fileCount, patterns.join(', '));
 
 		this.on('all', (event, filepath) => {
-			filepath = path.relative(process.cwd(), filepath);
-			npmlog.info('gazer-color', '`%s` %s', filepath, event);
+			filepath = relative(process.cwd(), filepath);
+			info('gazer-color', '`%s` %s', filepath, event);
 			runner.run();
 		});
 	});

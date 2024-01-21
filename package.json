@@ -3,6 +3,7 @@
   "version": "1.0.1",
   "description": "Watch some files, do a thing - a gazer fork capable of color output",
   "main": "index.js",
+  "type": "module",
   "bin": {
     "gazer-color": "cli.js"
   },

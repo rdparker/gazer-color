@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 'use strict';
-const yargs = require('yargs');
-const gazer = require('.');
+import yargs from 'yargs/yargs';
+import gazer from './index.js';
 
-const {argv} = yargs
+const {argv} = yargs(process.argv.slice(2))
 	.usage('Usage: gazer -v -p \'**/*.js\' -- <your command>')
 	.alias('v', 'verbose')
 	.describe('v', 'Turn on verbose output')
